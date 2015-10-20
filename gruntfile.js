@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         less: {
             build: {
                 files: {
-                    'dist/css/weatherApp.css': 'src/css/main.less'
+                    'dist/css/main.css': 'src/css/main.less'
                 }
             }
         },
@@ -16,14 +16,14 @@ module.exports = function (grunt) {
             },
             build: {
                 files: {
-                    'dist/css/weatherApp.min.css': 'dist/css/weatherApp.css'
+                    'dist/css/main.min.css': 'dist/css/main.css'
                 }
             }
         },
         browserify: {
             dist: {
                 files: {
-                    'dist/js/weatherApp.js': ['main.js']
+                    'dist/js/main.js': ['main.js']
                 }
             }
         },
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
             },
             build: {
                 files: {
-                    'dist/js/weatherApp.min.js': 'dist/js/weatherApp.js'
+                    'dist/js/main.min.js': 'dist/js/main.js'
                 }
             }
         },
@@ -53,8 +53,7 @@ module.exports = function (grunt) {
                     singleRun: true,
                     browsers: ['PhantomJS'],
                     files: [
-                        'dist/js/weatherApp.js',
-                        'node_modules/angular-mocks/angular-mocks.js',
+                        'dist/js/main.js',
                         'src/js/**/*Test.js'
                     ]
                 }

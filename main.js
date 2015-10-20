@@ -1,5 +1,3 @@
-/* Loading Libs */
-jQuery = $ = require('jquery');
-var bootstrap = require('bootstrap');
+Game = require('./src/js/Game');
 
-
+var Table = Game.start();

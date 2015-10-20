@@ -5,7 +5,8 @@
   "main": "main.js",
   "dependencies": {
     "bootstrap": "^3.3.5",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "pixi.js": "^3.0.8"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
