@@ -2,6 +2,11 @@ module.exports = {
     'PlayingTable': require('./PlayingTable/PlayingTable'),
     'CardDock': require('./CardDock/CardDock'),
     'Player': require('./Player/Player'),
+
+    'View': {
+        'renderer': {},
+        'stage': {}
+    },
     'init': function(){
 
     },
@@ -22,7 +27,7 @@ module.exports = {
         ];
 
         var Table = new this.PlayingTable(Dock, Players);
-
+        Table.distribute(9);
         return Table;
     }
 };

@@ -23,7 +23,8 @@ module.exports = function (grunt) {
         browserify: {
             dist: {
                 files: {
-                    'dist/js/main.js': ['main.js']
+                    'dist/js/main.js': ['main.js'],
+                    'dist/js/view.js': ['view.js']
                 }
             }
         },
@@ -43,7 +44,7 @@ module.exports = function (grunt) {
                 tasks: ['less']
             },
             scripts: {
-                files: ['src/**/*.js', 'main.js'], tasks: ['browserify', 'test']
+                files: ['src/**/*.js', 'main.js', 'view.js'], tasks: ['browserify', 'test']
             }
         },
         karma: {

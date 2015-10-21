@@ -8,7 +8,7 @@ describe('Test CardDock', function(){
     it('Generate Color', function(){
         var Dock = new Game.CardDock();
 
-        expect(Dock.generateFullColor('Spade').length).toEqual(13);
+        expect(Dock.generateFullColor('Spades').length).toEqual(13);
     });
 
 

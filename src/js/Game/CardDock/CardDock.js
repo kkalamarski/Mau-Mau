@@ -12,10 +12,10 @@ CardDock.prototype = {
     },
     'generate': function () {
         var cards = [].concat(
-            this.generateFullColor('Spade'),
-            this.generateFullColor('Heart'),
-            this.generateFullColor('Diamond'),
-            this.generateFullColor('Club')
+            this.generateFullColor('Spades'),
+            this.generateFullColor('Hearts'),
+            this.generateFullColor('Diams'),
+            this.generateFullColor('Clubs')
         );
 
         this.cards = cards;
