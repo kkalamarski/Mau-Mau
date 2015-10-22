@@ -25,7 +25,8 @@ module.exports = {
         ];
 
         var Table = new this.PlayingTable(Dock, Players);
-        Table.distribute(9);
+        Table.distribute(5);
+        Table.playCard(Table.Dock.draw(1));
         this.View.renderers.init(Table);
         Table.nextPlayer();
         return Table;

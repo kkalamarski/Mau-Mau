@@ -41,6 +41,16 @@ function PlayingTable(Dock, Players) {
     me.Dock = Dock;
     me.Players = Players;
 
+    me.Dock.addEventListener('noCards', function(){
+        var card = me.cards.pop();
+        var newDock = me.cards;
+        me.cards = [card];
+
+        me.Dock.cards = me.Dock.cards.concat(newDock);
+        me.Dock.shuffle();
+        me.raiseEvent('cardDrew');
+    });
+
     me.cards = [];
     me.activePlayer = 1;
 
@@ -49,7 +59,13 @@ function PlayingTable(Dock, Players) {
         var timer;
         if (Player.computer) {
             timer = setTimeout(function () {
-                me.playCard(Player.playCard(0));
+                var bestCard = Player.findTheBestCard(me.cards[me.cards.length - 1]);
+                if (bestCard === false) {
+                    Player.drawCard(me.Dock.draw(1));
+                    me.raiseEvent('cardDrew');
+                } else {
+                    me.playCard(Player.playCard(bestCard));
+                }
                 me.nextPlayer();
                 console.info('Next turn: ' + me.Players[me.activePlayer].name);
             }, 500);

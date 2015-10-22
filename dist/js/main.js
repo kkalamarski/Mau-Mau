@@ -46,12 +46,33 @@ CardDock.prototype = {
         if (!count) {
             count = 1;
         }
+        if (this.cards.length < 2) {
+            this.raiseEvent('noCards');
+        }
 
         for (count; count > 0; count--) {
             cards.push(this.cards.shift());
         }
 
         return cards;
+    },
+    events: {},
+    addEventListener: function (eventName, handler) {
+        if (!(eventName in this.events))
+            this.events[eventName] = [];
+
+        this.events[eventName].push(handler);
+    },
+
+    raiseEvent: function (eventName, args) {
+        var currentEvents = this.events[eventName];
+        if (!currentEvents) return;
+
+        for (var i = 0; i < currentEvents.length; i++) {
+            if (typeof currentEvents[i] == 'function') {
+                currentEvents[i](args);
+            }
+        }
     }
 };
 
@@ -100,7 +121,24 @@ Player.prototype = {
                 currentEvents[i](args);
             }
         }
+    },
+    'findTheBestCard': function (lastCard) {
+        var found = false;
+        this.cards.forEach(function (Card, index) {
+            if (Card.value === lastCard.value) {
+                found = index;
+            }
+        });
+        if (!found) {
+            this.cards.forEach(function (Card, index) {
+                if (Card.color === lastCard.color) {
+                    found = index;
+                }
+            });
+        }
+        return found;
     }
+
 };
 
 function Player(name, computer) {
@@ -157,6 +195,16 @@ function PlayingTable(Dock, Players) {
     me.Dock = Dock;
     me.Players = Players;
 
+    me.Dock.addEventListener('noCards', function(){
+        var card = me.cards.pop();
+        var newDock = me.cards;
+        me.cards = [card];
+
+        me.Dock.cards = me.Dock.cards.concat(newDock);
+        me.Dock.shuffle();
+        me.raiseEvent('cardDrew');
+    });
+
     me.cards = [];
     me.activePlayer = 1;
 
@@ -165,7 +213,13 @@ function PlayingTable(Dock, Players) {
         var timer;
         if (Player.computer) {
             timer = setTimeout(function () {
-                me.playCard(Player.playCard(0));
+                var bestCard = Player.findTheBestCard(me.cards[me.cards.length - 1]);
+                if (bestCard === false) {
+                    Player.drawCard(me.Dock.draw(1));
+                    me.raiseEvent('cardDrew');
+                } else {
+                    me.playCard(Player.playCard(bestCard));
+                }
                 me.nextPlayer();
                 console.info('Next turn: ' + me.Players[me.activePlayer].name);
             }, 500);
@@ -221,7 +275,8 @@ module.exports = {
         ];
 
         var Table = new this.PlayingTable(Dock, Players);
-        Table.distribute(9);
+        Table.distribute(5);
+        Table.playCard(Table.Dock.draw(1));
         this.View.renderers.init(Table);
         Table.nextPlayer();
         return Table;

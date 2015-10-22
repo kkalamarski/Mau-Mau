@@ -42,12 +42,33 @@ CardDock.prototype = {
         if (!count) {
             count = 1;
         }
+        if (this.cards.length < 2) {
+            this.raiseEvent('noCards');
+        }
 
         for (count; count > 0; count--) {
             cards.push(this.cards.shift());
         }
 
         return cards;
+    },
+    events: {},
+    addEventListener: function (eventName, handler) {
+        if (!(eventName in this.events))
+            this.events[eventName] = [];
+
+        this.events[eventName].push(handler);
+    },
+
+    raiseEvent: function (eventName, args) {
+        var currentEvents = this.events[eventName];
+        if (!currentEvents) return;
+
+        for (var i = 0; i < currentEvents.length; i++) {
+            if (typeof currentEvents[i] == 'function') {
+                currentEvents[i](args);
+            }
+        }
     }
 };
 

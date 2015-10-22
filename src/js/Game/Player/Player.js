@@ -26,7 +26,24 @@ Player.prototype = {
                 currentEvents[i](args);
             }
         }
+    },
+    'findTheBestCard': function (lastCard) {
+        var found = false;
+        this.cards.forEach(function (Card, index) {
+            if (Card.value === lastCard.value) {
+                found = index;
+            }
+        });
+        if (!found) {
+            this.cards.forEach(function (Card, index) {
+                if (Card.color === lastCard.color) {
+                    found = index;
+                }
+            });
+        }
+        return found;
     }
+
 };
 
 function Player(name, computer) {
