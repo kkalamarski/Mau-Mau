@@ -51,4 +51,16 @@ describe('Test PlayingTable', function(){
         expect(Table.Players[3].cards.length).toEqual(4);
 
     });
+
+    it('Play Card', function(){
+        Table.distribute(5);
+        expect(Table.cards.length).toEqual(0);
+        Table.playCard(Table.Players[0].playCard(2));
+        expect(Table.cards.length).toEqual(1);
+        var secondCard = Table.Players[1].playCard(1);
+        Table.playCard(secondCard);
+        expect(Table.cards.length).toEqual(2);
+        expect(Table.cards[1]).toEqual(secondCard[0]);
+    });
+
 });

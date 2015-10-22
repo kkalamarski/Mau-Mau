@@ -21,7 +21,7 @@ describe('Test Player', function(){
 
         var playedCard = Player.cards[1];
 
-        expect(Player.playCard(1)).toEqual(playedCard);
+        expect(Player.playCard(1)[0]).toEqual(playedCard);
         expect(Player.cards.length).toEqual(2);
     });
 });

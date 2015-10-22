@@ -23,8 +23,7 @@ module.exports = function (grunt) {
         browserify: {
             dist: {
                 files: {
-                    'dist/js/main.js': ['main.js'],
-                    'dist/js/view.js': ['view.js']
+                    'dist/js/main.js': ['main.js']
                 }
             }
         },
@@ -44,7 +43,7 @@ module.exports = function (grunt) {
                 tasks: ['less']
             },
             scripts: {
-                files: ['src/**/*.js', 'main.js', 'view.js'], tasks: ['browserify', 'test']
+                files: ['src/**/*.js', 'main.js'], tasks: ['browserify', 'test']
             }
         },
         karma: {
@@ -54,6 +53,7 @@ module.exports = function (grunt) {
                     singleRun: true,
                     browsers: ['PhantomJS'],
                     files: [
+                        'https://code.createjs.com/easeljs-0.8.1.min.js',
                         'dist/js/main.js',
                         'src/js/**/*Test.js'
                     ]

@@ -3,12 +3,10 @@ module.exports = {
     'CardDock': require('./CardDock/CardDock'),
     'Player': require('./Player/Player'),
 
-    'View': {
-        'renderer': {},
-        'stage': {}
-    },
+    'View': require('../View'),
     'init': function(){
-
+        Game.View.stage.enableMouseOver(20);
+        return this;
     },
     'start': function(){
         console.info('Game Started.');
@@ -28,6 +26,8 @@ module.exports = {
 
         var Table = new this.PlayingTable(Dock, Players);
         Table.distribute(9);
+        this.View.renderers.init(Table);
+        Table.nextPlayer();
         return Table;
     }
 };
