@@ -141,10 +141,10 @@ Player.prototype = {
 
 };
 
-function Player(name, computer) {
+function Player(name, human) {
     var me = this;
 
-    me.computer = computer | true;
+    me.human = human || false;
     me.name = name;
     me.points = 0;
     me.cards = [];
@@ -211,7 +211,7 @@ function PlayingTable(Dock, Players) {
     // Logic for players
     me.turn = function (Player) {
         var timer;
-        if (Player.computer) {
+        if (!Player.human) {
             timer = setTimeout(function () {
                 var bestCard = Player.findTheBestCard(me.cards[me.cards.length - 1]);
                 if (bestCard === false) {
@@ -225,9 +225,14 @@ function PlayingTable(Dock, Players) {
             }, 500);
         } else {
             timer = setTimeout(function () {
+                Player.drawCard(me.Dock.draw(1));
                 me.nextPlayer();
                 console.info('Next turn: ' + me.Players[me.activePlayer].name);
             }, 15000);
+
+            if(clicked){
+                // handle this.
+            }
         }
     };
 

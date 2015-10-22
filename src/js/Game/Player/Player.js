@@ -46,10 +46,10 @@ Player.prototype = {
 
 };
 
-function Player(name, computer) {
+function Player(name, human) {
     var me = this;
 
-    me.computer = computer | true;
+    me.human = human || false;
     me.name = name;
     me.points = 0;
     me.cards = [];
