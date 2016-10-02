@@ -41,10 +41,42 @@ module.exports = Object.create({
                 Game.View.stage.update();
             };
 
-            Table.addEventListener("cardPlayed", update);
-            Table.addEventListener("cardDrew", update);
+            Table.addEventListener("NEXT_PLAYER", update);
+            Table.addEventListener("RENDER", update);
 
-            update();
+            var startScreen = function() {
+
+              var width = (Game.View.width / 2) - 100;
+              var height = (Game.View.height / 2) - 25;
+
+              var g = new createjs.Graphics();
+              g.setStrokeStyle(1);
+              g.beginStroke("#000000");
+              g.beginFill("#FFFFFF");
+              g.drawRect(width, height, 200, 50);
+
+              var shape = new createjs.Shape(g);
+
+
+              var color = '#000000';
+
+              var textColorCenter = new createjs.Text('Start The Game', "22px Arial", color);
+              textColorCenter.x = width + 100;
+              textColorCenter.y = height + 14;
+              textColorCenter.textAlign = 'center';
+
+              var container = new createjs.Container();
+              container.addChild(shape, textColorCenter);
+
+              container.addEventListener("click", function () {
+                Game.raiseEvent('START_GAME');
+              });
+
+              Game.View.stage.addChild(container);
+              Game.View.stage.update();
+            };
+
+            startScreen();
         },
         'PlayersCardsRenderer': require('./Renderers/PlayersCardsRenderer'),
         'OpponentsCardsRenderer': require('./Renderers/OpponentsCardsRenderer'),
